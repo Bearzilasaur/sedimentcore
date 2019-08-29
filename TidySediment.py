@@ -23,31 +23,33 @@ def tableDepth(tablePath):
 
 
 def SedClassif(table):
-    table["SedClass"] = ""
-    grainSize = table.iloc[:, 2]
     print("table *****", table)
-
-    # detailSedClass = {"VF Sand": 125, # More detailed classify for
-    #                  "F Sand": 250,   # Sandy sediments
-    #                  "M Sand": 500,
-    #                  "C Sand": 1000,
-    #                  "VC Sand": 2000
-    #                  }
-    sedCategories = [
-        (grainSize <= 3.9),
-        (grainSize <= 62.5) & (grainSize > 3.9),
-        (grainSize <= 2000) & (grainSize > 62.5),
-        (grainSize > 2000)
-    ]
-    sedCatNames = [
-        "Clay",
-        "Silt",
-        "Sand",
-        "Gravel"
-    ]
-    table["SedClass"] = np.select(sedCategories,
-                                  sedCatNames,
-                                  default="")
+    def categorize(c):
+        if c.iloc[2] > 2000:
+            return 'Gravel'
+        if c.iloc[2] <= 2000 & c.iloc[2] > 62.5:
+            return 'Sand'
+        if c.iloc[2] <= 62.5 & c.iloc[2] > 3.9:
+            return 'Silt'
+        if c.iloc[2] <= 3.9:
+            return 'Clat'
+    #
+    #sedCategories = [
+    #    (grainSize > 2000),
+    #    (grainSize <= 2000) & (grainSize > 62.5),
+    #    (grainSize <= 62.5) & (grainSize > 3.9),
+    # #   (grainSize <= 3.9)
+    #]
+    #sedCatNames = [
+    #    "Gravel",
+    #    "Sand",
+    #    "Silt",
+    #    "Clay"
+    #]
+    #table["SedClass"] = np.select(sedCategories,
+    #                              sedCatNames,
+    #                              default="")
+    table['SedClass'] = table.apply(categorize, axis = 1)
     return table
 
 

@@ -15,7 +15,7 @@ def rawdat(sedfilepath):
                      skiprows=74,
                      header=None,
                      names=['BinMaxSedDiameter',
-                            'ProportionOfSample'],
+                            'SedProp'],
                             engine='python')
     return df
 
