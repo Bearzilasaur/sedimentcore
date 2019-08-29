@@ -16,6 +16,6 @@ def synthesizeSedData(store=True, clean=False):
     if store is True:
         savepath = filedialog.asksaveasfilename(
             defaultextension=".csv")
-        bigsedtable.to_csv(savepath, index=None, header=True)
+        bigsedtable.to_csv(savepath, index=True, header=True)
     else:
         return bigsedtable

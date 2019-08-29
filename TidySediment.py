@@ -18,38 +18,41 @@ def namecol(table, depth):
 
 def tableDepth(tablePath):
     filename = os.path.basename(tablePath)
-    depth = filename[6:8]
+    lst = filename.split('_') 
+    depth = lst[1]
     return depth
 
 
 def SedClassif(table):
+    table['SedClass']=''
+    grainSize = table.iloc[:,1]
     print("table *****", table)
-    def categorize(c):
-        if c.iloc[2] > 2000:
-            return 'Gravel'
-        if c.iloc[2] <= 2000 & c.iloc[2] > 62.5:
-            return 'Sand'
-        if c.iloc[2] <= 62.5 & c.iloc[2] > 3.9:
-            return 'Silt'
-        if c.iloc[2] <= 3.9:
-            return 'Clat'
-    #
-    #sedCategories = [
-    #    (grainSize > 2000),
-    #    (grainSize <= 2000) & (grainSize > 62.5),
-    #    (grainSize <= 62.5) & (grainSize > 3.9),
-    # #   (grainSize <= 3.9)
-    #]
-    #sedCatNames = [
-    #    "Gravel",
-    #    "Sand",
-    #    "Silt",
-    #    "Clay"
-    #]
-    #table["SedClass"] = np.select(sedCategories,
-    #                              sedCatNames,
-    #                              default="")
-    table['SedClass'] = table.apply(categorize, axis = 1)
+    #def categorize(c):
+    #    if c['BinMaxSedDiameter'] > 2000:
+    #        return 'Gravel'
+    #    if c['BinMaxSedDiameter'] <= 2000 and c['BinMaxSedDiameter'] > 62.5:
+    #        return 'Sand'
+    #    if c['BinMaxSedDiameter'] <= 62.5 and c['BinMaxSedDiameter'] > 3.9:
+    #        return 'Silt'
+    #    if c['BinMaxSedDiameter'] <= 3.9:
+    #        return 'Clay'
+    
+    sedCategories = [
+        (grainSize < 3.9),
+        (grainSize > 3.9) & (grainSize < 62.5),
+        (grainSize > 62.5) & (grainSize < 2000),
+        (grainSize > 2000)
+    ]
+    sedCatNames = [
+        "Clay",
+        "Silt",
+        "Sand",
+        "Gravel"
+    ]
+    table["SedClass"] = np.select(sedCategories,
+                                  sedCatNames,
+                                  default="")
+    #table['SedClass'] = table.apply(categorize, axis = 1)
     return table
 
 
@@ -62,4 +65,11 @@ def bigtable(tablepathlist):  # takes a list of filepaths as input then
         table_complete = SedClassif(table_w_depth)
         sedData = pd.concat([sedData, table_complete], ignore_index=True)
     print(sedData)
-    return sedData
+    def perc(x):
+        y=x/100
+        return y
+    sedData.dropna()
+    sedData['PercentOfSample']=sedData['ProportionOfSample'].apply(lambda x: perc(x))
+    sedPerc = sedData.groupby(['DepthMeasured', 'SedClass']).sum()
+    print('SEDPERC \n\n\n\n\n\n', sedPerc)
+    return sedPerc

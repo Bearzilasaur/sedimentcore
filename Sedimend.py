@@ -17,7 +17,8 @@ def rawdat(sedfilepath):
                      names=['BinMaxSedDiameter',
                             'SedProp'],
                             engine='python')
-    return df
+    df2 = df.dropna()
+    return df2
 
 
 def simplify():
