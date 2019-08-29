@@ -7,7 +7,7 @@
 import os
 import numpy as np
 import pandas as pd
-import sedfilegrab as sfg
+import RetrieveSediment as sfg
 
 
 def namecol(table, depth):

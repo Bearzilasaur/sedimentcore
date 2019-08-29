@@ -6,21 +6,22 @@ import pandas as pd
 import tkinter
 from tkinter import filedialog
 import xlrd
-import Sediselect
+import RetrieveSediment
 
 
 def rawdat(sedfilepath):
+    print(sedfilepath)
     df = pd.read_csv(sedfilepath,
                      skiprows=74,
                      header=None,
                      names=['BinMaxSedDiameter',
                             'ProportionOfSample'],
-                     engine='python')
+                            engine='python')
     return df
 
 
 def simplify():
-    paths = Sediselect.getsedspaths()
+    paths = RetrieveSediment.getsedspaths()
     root = tkinter.Tk()
     root.withdraw()
     save_file = filedialog.askdirectory(title='Select save folder')
@@ -29,6 +30,7 @@ def simplify():
             df = pd.DataFrame(rawdat(i))
             _, filename = i.rsplit('/', 1)
             write_path = save_file + '/' + filename
+            print(write_path)
             df.to_csv(write_path)
         except IsADirectoryError:
             pass
