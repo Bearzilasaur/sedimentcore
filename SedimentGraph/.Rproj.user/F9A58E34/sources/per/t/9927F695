@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1567071454881.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3005478822",
+    "id" : "9927F695",
+    "lastKnownWriteTime" : 1567070682,
+    "last_content_update" : 1567070682,
+    "path" : "~/Documents/Projects/R Projects/SedimentGraph/SedGraphFunction.R",
+    "project_path" : "SedGraphFunction.R",
+    "properties" : {
+        "cursorPosition" : "4,16",
+        "scrollLine" : "0"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
