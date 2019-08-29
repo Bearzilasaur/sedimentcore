@@ -78,4 +78,5 @@ savefile=FALSE:
 
 The next step is to integrate all of these into a single callable function which will then let the user determine where the function ends, such as after raw extraction, big table creation, or simply return a graph. 
 
-
+# Note
+There is currently an issue where .DS_Store files or any dotfiles in the target directory with the raw Beckham Coulter files can break the function. It is important to make sure that the folder is clean, I am working on an implementation where the user will select the ***Files*** rather than the ***folder*** which the files reside in. 
